@@ -1,26 +1,47 @@
 # mujoco-ant
 
- Minimal RL project for training and visualizing a MuJoCo Ant agent with SAC (Stable-Baselines3).
+Minimal RL project for training and visualizing a MuJoCo Ant agent with SAC (Stable-Baselines3).
 
- ## Setup
+A minimal Gymnasium MuJoCo `Ant-v4` + Stable-Baselines3 SAC setup.
 
- ```bash
- # Python 3.11 recommended
- source myenv/bin/activate
- python -m pip install --upgrade pip
- python -m pip install "gymnasium[mujoco]" stable-baselines3 tensorboard
+## Install
 
-Train
+```bash
+python3 -m venv myenv
+source myenv/bin/activate
+pip install --upgrade pip
+pip install "gymnasium[mujoco]" stable-baselines3 torch tensorboard
+```
 
- python train.py
+## Train (saved model + stats)
 
-Outputs:
+```bash
+python3 train.py \
+  --env Ant-v4 \
+  --timesteps 10000 \
+  --n-envs 8 \
+  --vec-env subproc \
+  --model-path models/ant \
+  --vecnorm-path models/ant_vecnormalize.pkl
+```
 
- - sac_ant_basic.zip
- - ant_vecnormalize.pkl
+Notes:
+- Defaults: `--device auto` (uses CUDA if available), `--mujoco-gl egl`.
+- Parallel rollout collection: `--n-envs` + `--vec-env subproc`.
+- Outputs: `<model-path>.zip` and `<vecnorm-path>`.
+- Training UI: clean one-line progress bar (use `--no-progress` to disable).
+- Fast default: `--timesteps 10000` (~100x less than 1,000,000).
+- Training ends when `--timesteps` is reached, then model/stats are saved.
+- Post-train eval defaults to `--eval-episodes 1` (`--eval-episodes 0` skips eval).
 
-Render
+## Render (load saved artifacts)
 
- python render.py
+```bash
+python3 render.py --env Ant-v4 --model-path models/ant --vecnorm-path models/ant_vecnormalize.pkl --episodes 3
+```
 
-This loads the saved model + normalization stats and renders a few episodes of Ant-v4. ```
+Notes:
+- `render.py` defaults to `--render-mode auto`:
+  - Uses `human` when `DISPLAY` is available.
+  - Uses `rgb_array` in headless environments.
+- If artifacts are missing, run `train.py` first (or pass existing paths).
