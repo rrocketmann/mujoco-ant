@@ -1,19 +1,26 @@
- # mujoco-ant
- 
- A minimal neural-net project for training a walking agent on Gymnasium MuJoCo `Ant-v4`.
- 
- ## Install (venv)
- 
+# mujoco-ant
+
+ Minimal RL project for training and visualizing a MuJoCo Ant agent with SAC (Stable-Baselines3).
+
+ ## Setup
+
  ```bash
- python3 -m venv .venv
- source .venv/bin/activate
- pip install --upgrade pip
- pip install gymnasium[mujoco]
+ # Python 3.11 recommended
+ source myenv/bin/activate
+ python -m pip install --upgrade pip
+ python -m pip install "gymnasium[mujoco]" stable-baselines3 tensorboard
 
 Train
 
- python train.py --env Ant-v4 --timesteps 1000000 --save models/ant.pt
+ python train.py
+
+Outputs:
+
+ - sac_ant_basic.zip
+ - ant_vecnormalize.pkl
 
 Render
 
- python render.py --env Ant-v4 --model models/ant.pt
+ python render.py
+
+This loads the saved model + normalization stats and renders a few episodes of Ant-v4. ```
