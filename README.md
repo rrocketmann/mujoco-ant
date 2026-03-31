@@ -4,12 +4,23 @@ Minimal RL project for training and visualizing a MuJoCo Ant agent with SAC (Sta
 
 A minimal Gymnasium MuJoCo `Ant-v4` + Stable-Baselines3 SAC setup.
 
-## Install
+## Install (Python 3.12 required)
+
+This project requires **Python 3.12**.
+
+If `python3.12` is not installed yet (Ubuntu):
 
 ```bash
-python3 -m venv myenv
+sudo apt update
+sudo apt install -y python3.12 python3.12-venv
+```
+
+Create and activate the virtual environment with Python 3.12:
+
+```bash
+python3.12 -m venv myenv
 source myenv/bin/activate
-pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install "gymnasium[mujoco]" stable-baselines3 torch tensorboard
 ```
 
